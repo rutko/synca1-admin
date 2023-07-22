@@ -32,22 +32,18 @@ export async function action({ params, request, context }: ActionArgs) {
 export const loader = async ({ params, context }: LoaderArgs) => {
   const db = createClient(context.DB as D1Database);
   const categoryId = params.slug
-  try {
-    const category = {id: 1, name: 'TEST'}
-//   if (!category) {
-//     throw new Response("Not Found", {
-//       status: 404,
-//     });
-//   }
-    return { category: category }
-  } catch (error) {
-    return new Response(error || 'Internal server error', { status: 500 });
+  const category = await db.select().from(categories).where(eq(categories.id, categoryId)).all()
+  if (!category) {
+    throw new Response("Not Found", {
+      status: 404,
+    });
   }
+  return { category: category }
 }
 
 export default function CategorySlug() {
   const data = useLoaderData<typeof loader>();
-  const categoryName = data?.category[0]?.name
+  const categoryName = data.category[0].name
   console.log(data)
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
