@@ -33,7 +33,7 @@ export const loader = async ({ params, context }: LoaderArgs) => {
   const db = createClient(context.DB as D1Database);
   const categoryId = params.slug
   try {
-    const category = await db.select().from(categories).where(eq(categories.id, categoryId)).all()
+    const category = {id: 1, name: 'TEST'}
 //   if (!category) {
 //     throw new Response("Not Found", {
 //       status: 404,
