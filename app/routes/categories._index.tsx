@@ -36,7 +36,8 @@ export async function action({request, context}: ActionArgs) {
 
 export const loader = async ({ context }: LoaderArgs) => {
   const db = createClient(context.DB as D1Database);
-  const allCategories = await db.select().from(categories).orderBy(desc(categories.createdAt)).all()
+  // const allCategories = await db.select().from(categories).orderBy(desc(categories.createdAt)).all()
+  const allCategories = {id:1, name: 'TEST'}
   if (!allCategories) {
     throw new Response("Not Found", {
       status: 404,
