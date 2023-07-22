@@ -1,0 +1,4 @@
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "aiyasan-db"
+database_id = "f500e523-5667-4aa5-ab42-26b87672bede"
