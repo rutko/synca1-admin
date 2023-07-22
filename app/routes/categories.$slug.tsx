@@ -47,7 +47,7 @@ export const loader = async ({ params, context }: LoaderArgs) => {
 
 export default function CategorySlug() {
   const data = useLoaderData<typeof loader>();
-  const categoryName = data.category[0].name
+  const categoryName = data?.category[0]?.name
   console.log(data)
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
