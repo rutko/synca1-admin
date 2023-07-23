@@ -99,6 +99,12 @@ export default function Images() {
           <button type="submit">作成</button>
         </fieldset>
       </form>
+      <h2>カテゴリーごとの画像</h2>
+      <ul>
+        {data.categories.map((c)=>
+          <li><a href={`/images/category/${c.id}`}></a>{c.name}</li>
+        )}
+      </ul>
     </div>
   );
 }
