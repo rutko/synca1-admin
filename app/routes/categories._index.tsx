@@ -35,14 +35,14 @@ export async function action({request, context}: ActionArgs) {
 }
 
 export const loader = async ({ context }: LoaderArgs) => {
-  const db = createClient(context.DB as D1Database);
-	// const allCategories = await db.select().from(categories).orderBy(desc(categories.createdAt)).all()
-  // if (!allCategories) {
-  //   throw new Response("Not Found", {
-  //     status: 404,
-  //   });
-  // }
-  	return { categories: context.env }
+  const db = createClient(context.env.DB as D1Database);
+	const allCategories = await db.select().from(categories).orderBy(desc(categories.createdAt)).all()
+  if (!allCategories) {
+    throw new Response("Not Found", {
+      status: 404,
+    });
+  }
+  	return { categories: allCategories }
 }
 
 export type Categries = InferModel<typeof categories>;
