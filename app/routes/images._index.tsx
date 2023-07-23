@@ -76,6 +76,7 @@ export default function Images() {
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Synca1 Admin</h1>
       <ul>
+        <li><a href="/">TOPページ</a></li>
         <li><a href="/categories">カテゴリー</a></li>
         <li><a href="/tags">タグ</a></li>
       </ul>

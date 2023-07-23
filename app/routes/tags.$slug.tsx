@@ -48,6 +48,12 @@ export default function TagSlug() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>{ tagName }</h1>
+      <ul>
+				<li><a href="/">TOPページ</a></li>
+				<li><a href="/categories">カテゴリー</a></li>
+				<li><a href="/tags">タグ</a></li>
+				<li><a href="/images">画像投稿</a></li>
+    	</ul>
       <form method="post">
         <fieldset>
           <legend>{ tagName }の編集</legend>

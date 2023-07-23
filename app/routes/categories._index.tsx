@@ -54,6 +54,11 @@ export default function Categories() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Synca1 Admin</h1>
+      <ul>
+        <li><a href="/">TOPページ</a></li>
+        <li><a href="/tags">タグ</a></li>
+        <li><a href="/images">画像投稿</a></li>
+      </ul>
       <form method="post">
         <fieldset>
           <legend>カテゴリーの作成</legend>

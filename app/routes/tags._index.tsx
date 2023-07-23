@@ -46,6 +46,11 @@ export default function Tags() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>Synca1 Admin</h1>
+      <ul>
+				<li><a href="/">TOPページ</a></li>
+				<li><a href="/categories">カテゴリー</a></li>
+				<li><a href="/images">画像投稿</a></li>
+    	</ul>
       <form method="post" action="/tags">
         <fieldset>
           <legend>タグの作成</legend>
