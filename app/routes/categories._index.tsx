@@ -26,7 +26,7 @@ export async function action({request, context}: ActionArgs) {
       updatedAt: new Date(),
     }
     const db = createClient(context.DB as D1Database);
-    // await db.insert(categories).values(newCategory).run();
+    await db.insert(categories).values(newCategory).run();
     return json({object: db});
 
     }  catch (error) {
@@ -36,17 +36,13 @@ export async function action({request, context}: ActionArgs) {
 
 export const loader = async ({ context }: LoaderArgs) => {
   const db = createClient(context.DB as D1Database);
-  try {
-	const allCategories = await db.select().from(categories).orderBy(desc(categories.createdAt)).all()
+	// const allCategories = await db.select().from(categories).orderBy(desc(categories.createdAt)).all()
   // if (!allCategories) {
   //   throw new Response("Not Found", {
   //     status: 404,
   //   });
   // }
-  	return { categories: allCategories }
-	} catch (error) {
-    return new Response(error || 'Internal server error', { status: 500 });
-  }
+  	return { categories: context }
 }
 
 export type Categries = InferModel<typeof categories>;
