@@ -42,7 +42,7 @@ export const loader = async ({ context }: LoaderArgs) => {
   //     status: 404,
   //   });
   // }
-  	return { categories: context }
+  	return { categories: context.env }
 }
 
 export type Categries = InferModel<typeof categories>;
