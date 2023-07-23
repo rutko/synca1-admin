@@ -24,13 +24,13 @@ export async function action({ params, request, context }: ActionArgs) {
     createdAt: new Date(),
     updatedAt: new Date(),
   }
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   await db.update(tags).set(newTag).where(eq(tags.id, tagId)).run();
   return redirect(`/tags/${tagId}`);
 }
 
 export const loader = async ({ params, context }: LoaderArgs) => {
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   const tagId = params.slug
   const tag = await db.select().from(tags).where(eq(tags.id, tagId)).all()
   if (!tag) {

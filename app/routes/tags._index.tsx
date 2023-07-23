@@ -23,13 +23,13 @@ export async function action({request, context}: ActionArgs) {
     createdAt: new Date(),
     updatedAt: new Date(),
   }
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   await db.insert(tags).values(newTags).run();
   return redirect(`/tags`);
 }
 
 export const loader = async ({ context }: LoaderArgs) => {
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   const allTags = await db.select().from(tags).orderBy(desc(tags.createdAt)).all()
   if (!allTags) {
     throw new Response("Not Found", {

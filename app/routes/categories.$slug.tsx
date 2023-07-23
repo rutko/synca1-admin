@@ -24,13 +24,13 @@ export async function action({ params, request, context }: ActionArgs) {
     createdAt: new Date(),
     updatedAt: new Date(),
   }
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   await db.update(categories).set(newCategory).where(eq(categories.id, categoryId)).run();
   return redirect(`/categories/${categoryId}`);
 }
 
 export const loader = async ({ params, context }: LoaderArgs) => {
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   const categoryId = params.slug
   const category = await db.select().from(categories).where(eq(categories.id, categoryId)).all()
   if (!category) {

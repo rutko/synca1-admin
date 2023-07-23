@@ -26,7 +26,7 @@ export async function action({request, context}: ActionArgs) {
       invariant(file, 'File is required');
 
       const fileName = `${uuid()}.${file.type.split('/')[1]}`;
-      const bucket = (context.MY_BUCKET as R2Bucket);
+      const bucket = (context.env.MY_BUCKET as R2Bucket);
       const response = await bucket.put(fileName, await file.arrayBuffer(), {
         httpMetadata: { contentType: file.type },
       });
@@ -43,7 +43,7 @@ export async function action({request, context}: ActionArgs) {
     const newImages: NewImage[] = await Promise.all(uploadR2Promises);
 
     for (let image of newImages) {
-      const db = createClient(context.DB as D1Database);
+      const db = createClient(context.env.DB as D1Database);
       const d1Response = await db.insert(images).values(image).run();
 
       return json({object: d1Response});
@@ -55,7 +55,7 @@ export async function action({request, context}: ActionArgs) {
 }
 
 export const loader = async ({ context }: LoaderArgs) => {
-  const db = createClient(context.DB as D1Database);
+  const db = createClient(context.env.DB as D1Database);
   const allCategories = await db.select().from(categories).all()
   const allTags = await db.select().from(tags).all()
   const allImages = await db.select().from(images).all()
