@@ -56,7 +56,7 @@ export default function TagSlug() {
       <form method="post">
         <fieldset>
           <legend>{ imageName }の編集</legend>
-          <img src={`https://pub-4129228c5de34ed7a5eb7e59e41f2eae.r2.dev/${data.image[0].key}`}></img>
+          <img src={`https://pub-4129228c5de34ed7a5eb7e59e41f2eae.r2.dev/${data.image[0].key}`} width="150" height="150"></img>
           <div>
             <label htmlFor="tag">タグ</label>
             <input name="tag" type="text" required />
