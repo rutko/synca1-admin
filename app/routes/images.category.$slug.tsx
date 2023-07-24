@@ -41,14 +41,14 @@ export default function CategorySlug() {
       <li><a href="/images">画像投稿</a></li>
     </ul>
     {data.image.length ? (
-         <ol reversed>
+         <ul>
            {data.image.map((i) => (
              <li key={i.id}>
-               <a href={`/images/${i.id}`}>{i.name}</a>
+               <span>{i.id}.</span><a href={`/images/${i.id}`}>{i.name}</a>
                <div>{i.key}</div>
              </li>
            ))}
-         </ol>
+         </ul>
        ) : (
          <p>関連する画像はまだありません。</p>
        )}
