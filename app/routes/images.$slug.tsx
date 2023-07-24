@@ -50,6 +50,7 @@ export default function ImageSlug() {
   const data = useLoaderData<typeof loader>();
   const imageName = data.image[0].name
 	const tagOptions = data.tags.map(tag => ({ value: tag.id, label: tag.name }))
+	console.log(data)
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
       <h1>{ imageName }</h1>
