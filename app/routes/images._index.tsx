@@ -102,7 +102,9 @@ export default function Images() {
       <h2>カテゴリーごとの画像</h2>
       <ul>
         {data.categories.map((c)=>
-          <li><a href={`/images/category/${c.id}`}></a>{c.name}</li>
+          <li key={c.id}>
+            <a href={`/images/category/${c.id}`}>{c.name}</a>
+          </li>
         )}
       </ul>
     </div>
