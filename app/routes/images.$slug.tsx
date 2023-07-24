@@ -37,12 +37,13 @@ export const loader = async ({ params, context }: LoaderArgs) => {
   const imageId = params.slug
   const image = await db.select().from(images).where(eq(images.id, imageId)).all()
 	const allTags = await db.select().from(tags).all()
+	const imageToTags = await db.select().from(imagesToTags).where(eq(imagesToTags.image_id, imageId)).all()
   if (!image) {
     throw new Response("Not Found", {
       status: 404,
     });
   }
-  return { image: image, tags: allTags }
+  return { image: image, tags: allTags, imageToTags: imageToTags }
 }
 
 export default function ImageSlug() {
