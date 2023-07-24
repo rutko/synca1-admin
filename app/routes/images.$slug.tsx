@@ -50,6 +50,8 @@ export default function ImageSlug() {
   const data = useLoaderData<typeof loader>();
   const imageName = data.image[0].name
 	const tagOptions = data.tags.map(tag => ({ value: tag.id, label: tag.name }))
+	const selectedTagIds = data.imageToTags.map(it => it.tag_id);
+  const selectedTags = tagOptions.filter(option => selectedTagIds.includes(option.value));
 	console.log(data)
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
@@ -70,6 +72,7 @@ export default function ImageSlug() {
 						options={tagOptions}
 						className="basic-multi-select"
 						classNamePrefix="select"
+						value={selectedTags}
 					/>
 
           <button type="submit">更新</button>
