@@ -22,6 +22,9 @@ export async function action({ params, request, context }: ActionArgs) {
   const tagIds = formData.getAll('tags').map(Number);
 	const db = createClient(context.env.DB as D1Database);
 
+	// 画像IDが同じimagesToTagsのデータを削除
+	await db.delete(imagesToTags).where(eq(imagesToTags.image_id, imageId)).run();
+
 	for (const tagId of tagIds) {
     const newImagesToTags: NewImagesToTags = {
       image_id: imageId,
