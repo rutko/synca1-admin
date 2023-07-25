@@ -18,7 +18,7 @@ export const loader = async ({ params, context }: LoaderArgs) => {
   const db = createClient(context.env.DB as D1Database);
   const categoryId = params.slug
   const category = await db.select().from(categories).where(eq(categories.id, categoryId)).all()
-  const image = await db.select().from(images).all()
+  const image = await db.select().from(images).where(eq(images.category_id, categoryId)).all()
   if (!category) {
     throw new Response("Not Found", {
       status: 404,
