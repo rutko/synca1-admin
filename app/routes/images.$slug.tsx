@@ -72,7 +72,7 @@ export default function ImageSlug() {
 						options={tagOptions}
 						className="basic-multi-select"
 						classNamePrefix="select"
-						value={selectedTags}
+						defaultValue={selectedTags}
 					/>
 
           <button type="submit">更新</button>
