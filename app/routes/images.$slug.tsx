@@ -7,6 +7,7 @@ import { createClient } from "~/db/client.server"
 import { images, tags, imagesToTags } from '~/db/schema';
 import { eq } from "drizzle-orm";
 import Select from 'react-select';
+import { useState, useEffect } from 'react';
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -68,7 +69,16 @@ export default function ImageSlug() {
   const imageName = data.image[0].name
 	const tagOptions = data.tags.map(tag => ({ value: tag.id, label: tag.name }))
 	const selectedTagIds = data.imageToTags.map(it => it.tag_id);
-  const selectedTags = tagOptions.filter(option => selectedTagIds.includes(option.value));
+	const initialSelectedTags = tagOptions.filter(option => selectedTagIds.includes(option.value));
+	const [selectedTags, setSelectedTags] = useState(initialSelectedTags);
+
+	useEffect(() => {
+    setSelectedTags(initialSelectedTags);
+  }, [initialSelectedTags]);
+
+  const handleTagChange = (selectedOptions) => {
+    setSelectedTags(selectedOptions);
+  }
 	console.log(data)
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
@@ -84,13 +94,14 @@ export default function ImageSlug() {
           <legend>{ imageName }の編集</legend>
           <img src={`https://pub-4129228c5de34ed7a5eb7e59e41f2eae.r2.dev/${data.image[0].key}`} height="150"></img>
           <Select
-						isMulti
-						name="tags"
-						options={tagOptions}
-						className="basic-multi-select"
-						classNamePrefix="select"
-						value={selectedTags}
-					/>
+            isMulti
+            name="tags"
+            options={tagOptions}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            value={selectedTags}
+            onChange={handleTagChange}
+          />
 
           <button type="submit">更新</button>
         </fieldset>
