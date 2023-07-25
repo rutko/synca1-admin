@@ -19,15 +19,32 @@ type NewImagesToTags = InferModel<typeof imagesToTags, 'insert'>;
 export async function action({ params, request, context }: ActionArgs) {
   const imageId = Number(params.slug)
   const formData = await request.formData();
-  const tagIds = formData.getAll('tags').map(Number);
+  const newTagIds = formData.getAll('tags').map(Number);
 	const db = createClient(context.env.DB as D1Database);
 
-	for (const tagId of tagIds) {
+	// Get existing tag ids for the image
+  const existingImageToTags = await db.select().from(imagesToTags).where(eq(imagesToTags.image_id, imageId)).all();
+  const existingTagIds = existingImageToTags.map(it => it.tag_id);
+
+	// Find tag ids to be added and removed
+  const tagIdsToAdd = newTagIds.filter(id => !existingTagIds.includes(id));
+  const tagIdsToRemove = existingTagIds.filter(id => !newTagIds.includes(id));
+
+	// Add new tags
+  for (const tagId of tagIdsToAdd) {
     const newImagesToTags: NewImagesToTags = {
       image_id: imageId,
       tag_id: tagId,
     }
     await db.insert(imagesToTags).values(newImagesToTags).run();
+  }
+
+	// Remove tags
+  for (const tagId of tagIdsToRemove) {
+    const imageToTagToRemove = existingImageToTags.find(it => it.tag_id === tagId);
+    if (imageToTagToRemove) {
+      await db.delete(imagesToTags).where(eq(imagesToTags.tag_id, imageToTagToRemove.tag_id)).run();
+    }
   }
   return redirect(`/images/${params.slug}`);
 }
