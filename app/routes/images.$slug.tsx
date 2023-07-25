@@ -25,13 +25,13 @@ export async function action({ params, request, context }: ActionArgs) {
 	// 画像IDが同じimagesToTagsのデータを削除
 	await db.delete(imagesToTags).where(eq(imagesToTags.image_id, imageId)).run();
 
-	for (const tagId of tagIds) {
-    const newImagesToTags: NewImagesToTags = {
-      image_id: imageId,
-      tag_id: tagId,
-    }
-    await db.insert(imagesToTags).values(newImagesToTags).run();
-  }
+	// for (const tagId of tagIds) {
+  //   const newImagesToTags: NewImagesToTags = {
+  //     image_id: imageId,
+  //     tag_id: tagId,
+  //   }
+  //   await db.insert(imagesToTags).values(newImagesToTags).run();
+  // }
   return redirect(`/images/${params.slug}`);
 }
 
